@@ -18,7 +18,7 @@ export default function App() {
   })
  
   
-useEffect(() => {localStorage.setItem('feedbackCount', JSON.stringify(feedback)), [feedback]})
+  useEffect(() => { localStorage.setItem('feedbackCount', JSON.stringify(feedback)); }, [feedback])
 
   const updateFeedback = feedbackType => {
     setFeedback({
@@ -36,13 +36,13 @@ useEffect(() => {localStorage.setItem('feedbackCount', JSON.stringify(feedback))
   }
 
  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-
+ const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
 
 
   return <>
     <Description />
     <Options updateFeedback={updateFeedback} totalFeedback={totalFeedback} resetFeedback={resetFeedback} />
-    {totalFeedback > 0 && <Feedback feedback={feedback} />}
+    {totalFeedback > 0 && <Feedback positiveFeedback={positiveFeedback} totalFeedback={totalFeedback} feedback={feedback} />}
     {totalFeedback <= 0 && <Notification/>}
   </>
 }
